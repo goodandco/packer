@@ -9,7 +9,7 @@
     "build:dev": "tsc -b --watch",
     "prebuild:dev": "rimraf dist",
     "lint": "eslint \"{src,apps,libs,test,integration}/**/*.ts\" --fix",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha test/**/*.spec.ts",
+    "test": "mocha test/**/*.spec.ts",
     "test:dev": "mocha -w --watch-files test/**/*.spec.ts"
   },
   "repository": {

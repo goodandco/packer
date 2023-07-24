@@ -1,3 +1,17 @@
-export interface IPacker {
-  pack(filePath: string): string;
+import { TInputData, TPackerResult } from './types';
+
+export interface IPacker<S, T> {
+  pack(filePath: S): T;
+}
+
+export interface IPackCalculator {
+  calculate(data: TInputData): TPackerResult;
+}
+
+export interface IDataProvider<T> {
+  getData(search: T): TInputData;
+}
+
+export interface IPackDataConvertor<T> {
+  convert(result: TPackerResult): T;
 }

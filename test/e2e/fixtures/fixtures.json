@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Should be match with provided expectations: file 'input.file'",
+    "filePath": "input.file",
+    "expected": "4\n-\n2,7\n8,9"
+  },
+  {
+    "name": "Should be match with custom expectations: file 'input.file.custom'",
+    "filePath": "input.file.custom",
+    "expected": "4\n-\n2,7\n8,9"
+  }
+]
