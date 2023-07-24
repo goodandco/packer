@@ -1,0 +1,54 @@
+{
+  "name": "@mobiquity/packer",
+  "version": "1.0.0",
+  "description": "Packer for Mobiquity",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "prebuild": "rimraf dist",
+    "build:dev": "tsc -b --watch",
+    "prebuild:dev": "rimraf dist",
+    "lint": "eslint \"{src,apps,libs,test,integration}/**/*.ts\" --fix",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha test/**/*.spec.ts",
+    "test:dev": "mocha -w --watch-files test/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goodandco/packer.git"
+  },
+  "keywords": [
+    "mobiquity",
+    "packer"
+  ],
+  "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goodandco/packer/issues"
+  },
+  "homepage": "https://github.com/goodandco/packer#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.4",
+    "@types/sinon": "^10.0.15",
+    "@typescript-eslint/eslint-plugin": "5.61.0",
+    "@typescript-eslint/parser": "5.62.0",
+    "chai": "^4.3.7",
+    "eslint": "8.45.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "^5.0.0",
+    "mocha": "^10.2.0",
+    "rimraf": "^5.0.1",
+    "sinon": "^15.2.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "tsconfig-paths/register"
+    ],
+    "exit": true
+  }
+}

@@ -1,0 +1,6 @@
+# IDE
+.idea
+.DS_Store
+# compiled output & libs
+node_modules
+dist
