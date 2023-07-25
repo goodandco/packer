@@ -1,11 +1,12 @@
 {
   "name": "@goodandco/mobiquity-packer",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Packer for Mobiquity by @goodandco",
   "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
   "license": "ISC",
   "homepage": "https://github.com/goodandco/packer#readme",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/goodandco/packer.git"

@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as fixtures from './fixtures/fixtures.json';
-import Packer, { APIException } from '../../src';
+import Packer, { APIException } from '../..';
 
 describe('Packer Tests', () => {
   // arrange
