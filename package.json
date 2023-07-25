@@ -1,7 +1,7 @@
 {
-  "name": "@mobiquity/packer",
+  "name": "@goodandco/mobiquity-packer",
   "version": "1.0.0",
-  "description": "Packer for Mobiquity",
+  "description": "Packer for Mobiquity by @goodandco",
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
