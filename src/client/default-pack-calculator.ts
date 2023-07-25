@@ -1,6 +1,7 @@
 import { TInputData, TInputDataRow, TPackerResult } from '../types';
 import {
   MAX_ITEM_WEIGHT,
+  MAX_ITEM_COST,
   MAX_ITEMS_LENGTH,
   MAX_PACK_WEIGHT,
 } from '../constants';
@@ -27,12 +28,18 @@ export class DefaultPackCalculator implements IPackCalculator {
       }
       // filtering all the items with weight less then max weight for package
       // and validating MAX_ITEM_WEIGHT
-      const preparedItems = items.filter(([, itemWeight]) => {
+      const preparedItems = items.filter(([, itemWeight, itemCost]) => {
         if (itemWeight > MAX_ITEM_WEIGHT) {
           throw new APIException(
             `Max weight for the item should be not more than ${MAX_ITEM_WEIGHT}. Your value is: ${itemWeight}.`,
           );
         }
+        if (itemCost > MAX_ITEM_COST) {
+          throw new APIException(
+            `Max cost for the item should be not more than ${MAX_ITEM_COST}. Your value is: ${itemCost}.`,
+          );
+        }
+
         return itemWeight <= maxWeight;
       });
 
