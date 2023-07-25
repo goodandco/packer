@@ -6,7 +6,22 @@
   },
   {
     "name": "Should be match with custom expectations: file 'input.file.custom'",
-    "filePath": "input.file.custom",
-    "expected": "4\n-\n2,7\n8,9"
+    "filePath": "input.file.100.allow",
+    "expected": "4\n1"
+  },
+  {
+    "name": "Should throw an APIException because of package weight > 100",
+    "filePath": "input.file.weight.over100",
+    "isThrowingError": true
+  },
+   {
+    "name": "Should throw an APIException because of item weight > 100",
+    "filePath": "input.file.item.weight.over100",
+    "isThrowingError": true
+  },
+   {
+    "name": "Should throw an APIException because of items' length > 15",
+    "filePath": "input.file.16items.throw",
+    "isThrowingError": true
   }
 ]
