@@ -2,7 +2,7 @@ name: Build, Lint and Test package
 on:
   push:
     branches:
-      - *
+      - '*'
 jobs:
   test:
     runs-on: ubuntu-latest
