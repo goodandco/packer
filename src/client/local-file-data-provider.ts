@@ -1,5 +1,5 @@
 import { IDataProvider } from '../interfaces';
-import { TInputData } from '../types';
+import { TInputData, TInputDataRow, TInputDataRowItem } from '../types';
 import { readFileSync } from 'fs';
 
 export default class LocalFileDataProvider implements IDataProvider<string> {
@@ -13,22 +13,23 @@ export default class LocalFileDataProvider implements IDataProvider<string> {
   }
 
   private convertInputData(stringData: string): TInputData {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return stringData.split('\n').map((row) =>
-      row.split(':').map((rowItems, i) => {
-        if (i === 0) {
-          return parseInt(rowItems) as number;
-        } else {
-          return rowItems
-            .replaceAll(') (', '|')
-            .replaceAll(')(', '|')
-            .replaceAll('(', '')
-            .replaceAll(')', '')
-            .split('|')
-            .map((itemsStr) => this.mapItem(itemsStr));
-        }
-      }),
+    return stringData.split('\n').map(
+      (row) =>
+        row
+          .split(':')
+          .slice(0, 2)
+          .map((rowItems, i) =>
+            i === 0
+              ? (parseInt(rowItems) as number)
+              : (rowItems
+                  .replaceAll(/ /g, '')
+                  .replaceAll(')(', '|')
+                  .replaceAll(/[()]/g, '')
+                  .split('|')
+                  .map((itemsStr) =>
+                    this.mapItem(itemsStr),
+                  ) as Array<TInputDataRowItem>),
+          ) as TInputDataRow,
     );
   }
 

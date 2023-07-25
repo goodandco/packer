@@ -27,6 +27,8 @@ export default class LocalFilePackCalculator implements IPackCalculator {
       );
     }
     const sorted = items
+      // filtering all the items with weight less then max weight for package
+      // and validating MAX_ITEM_WEIGHT
       .filter(([, itemWeight]) => {
         if (itemWeight > MAX_ITEM_WEIGHT) {
           throw new APIException(
@@ -35,9 +37,10 @@ export default class LocalFilePackCalculator implements IPackCalculator {
         }
         return itemWeight <= maxWeight;
       })
-      .sort(([, aW], [, bW]) => {
-        if (aW < bW) return -1;
-        if (aW > bW) return 1;
+      // necessary to asc sorting to be sure that next element has bigger weight
+      .sort(([, aWeight], [, bWeight]) => {
+        if (aWeight < bWeight) return -1;
+        if (aWeight > bWeight) return 1;
         return 0;
       });
 
@@ -47,6 +50,7 @@ export default class LocalFilePackCalculator implements IPackCalculator {
     const [, minItemWeight] = sorted[0];
 
     const result = sorted
+      // prepare list of all possible combinations
       .reduce((acc, [id, weight, price]) => {
         if (acc.length === 0 || weight + minItemWeight > maxWeight) {
           acc.push({
@@ -82,6 +86,7 @@ export default class LocalFilePackCalculator implements IPackCalculator {
         }
         return acc;
       }, [])
+      // prepare datastructure for filtering by price
       .map(({ items }) => {
         return items.reduce(
           (r, item) => {
@@ -92,6 +97,7 @@ export default class LocalFilePackCalculator implements IPackCalculator {
           { ids: [], sum: 0 },
         );
       })
+      // filtering prepared array
       .reduce(
         (
           res,

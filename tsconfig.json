@@ -21,6 +21,7 @@
     "paths": {}
   },
   "include": [
+    "index.ts",
     "src/**/*",
     "integration/**/*"
   ]
