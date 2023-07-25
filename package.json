@@ -1,6 +1,6 @@
 {
   "name": "@goodandco/mobiquity-packer",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Packer for Mobiquity by @goodandco",
   "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
   "license": "ISC",
@@ -17,10 +17,6 @@
   "keywords": [
     "mobiquity",
     "packer"
-  ],
-  "files": [
-    "**/*",
-    "*.md"
   ],
   "scripts": {
     "build": "tsc -b",

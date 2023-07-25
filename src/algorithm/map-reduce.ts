@@ -31,15 +31,17 @@ export class MapReduce implements IRowCalculateAlgorithm {
       return 0;
     });
     const [, minItemWeight] = sorted[0];
-
     const result = sorted
       // prepare list of all possible combinations: Array<TCombinationVariant>
       .reduce((acc, [id, weight, price]) => {
-        // if there is very begining of calculation then we add item to the first subset
-        // because in previous step we filtered the data and there is no weight more then maxWeight
-        // also if there is no way to add even item with minimal weight to curernt items' weight
-        // and be in range of maxWeight, then we also create subset from only one current item
-        if (acc.length === 0 || weight + minItemWeight > maxWeight) {
+        if (
+          // if there is very begining of calculation then we add item to the first subset
+          // because in previous step we filtered the data and there is no weight more then maxWeight
+          acc.length === 0 ||
+          // also if there is no way to add even item with minimal weight to curernt items' weight
+          // and be in range of maxWeight, then we also create subset from only one current item
+          weight + minItemWeight > maxWeight
+        ) {
           acc.push({
             items: [{ id, weight, price }],
             sum: weight,
