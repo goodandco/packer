@@ -1,9 +1,6 @@
 .idea
 .DS_Store
-.github/
-node_modules/
-src/
-test/
-index.ts
-tsconfig.json
-tsconfig.build.json
+.github
+node_modules
+src
+test
