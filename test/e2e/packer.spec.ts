@@ -1,7 +1,6 @@
 import * as assert from 'assert';
-// @ts-ignore
 import * as fixtures from './fixtures/fixtures.json';
-import { APIException, Packer } from '../..';
+import Packer, { APIException } from '../../src';
 
 describe('Packer Tests', () => {
   // arrange
@@ -11,7 +10,7 @@ describe('Packer Tests', () => {
       const test = () => Packer.pack(absoluteFilePath);
       if (isThrowingError) {
         // act + assert
-        assert.throws(test, APIException)
+        assert.throws(test, APIException);
       } else {
         // act
         const actual = test();
