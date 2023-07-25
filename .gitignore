@@ -1,6 +1,15 @@
-# IDE
-.idea
-.DS_Store
-# compiled output & libs
+# dependencies
 node_modules/
-dist/
+
+# IDE
+/.idea
+/.awcache
+/.vscode
+/.devcontainer
+*.code-workspace
+
+
+# bundle
+**/*.d.ts
+**/*.js
+**/*.js.map

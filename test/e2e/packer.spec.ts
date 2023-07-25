@@ -1,8 +1,7 @@
 import * as assert from 'assert';
-import APIException from '../../src/errors/api-exception';
 // @ts-ignore
 import * as fixtures from './fixtures/fixtures.json';
-import Packer from '../../src/packer';
+import { APIException, Packer } from '../..';
 
 describe('Packer Tests', () => {
   // arrange

@@ -4,8 +4,8 @@ import {
   MAX_ITEMS_LENGTH,
   MAX_PACK_WEIGHT,
 } from '../constants';
-import APIException from '../errors/api-exception';
 import { IPackCalculator } from '../interfaces';
+import { APIException } from '../errors';
 
 type TSumVariant = { ids: number[]; sum: number };
 type TCombinationVariant = {
@@ -13,7 +13,7 @@ type TCombinationVariant = {
   sum: number;
 };
 
-export default class LocalFilePackCalculator implements IPackCalculator {
+export class LocalFilePackCalculator implements IPackCalculator {
   calculate(data: TInputData): TPackerResult {
     return data.map((row: TInputDataRow) => this.calculateRow(row));
   }

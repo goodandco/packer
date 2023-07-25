@@ -5,7 +5,7 @@ import {
   IPacker,
 } from '../interfaces';
 
-export default class BasePacker<S, T> implements IPacker<S, T> {
+export class BasePacker<S, T> implements IPacker<S, T> {
   constructor(
     private readonly dataProvider: IDataProvider<S>,
     private readonly packCalculator: IPackCalculator,

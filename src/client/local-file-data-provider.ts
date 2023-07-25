@@ -1,9 +1,9 @@
 import { IDataProvider } from '../interfaces';
 import { TInputData, TInputDataRow, TInputDataRowItem } from '../types';
 import { readFileSync, existsSync } from 'fs';
-import APIException from '../errors/api-exception';
+import { APIException } from '../errors';
 
-export default class LocalFileDataProvider implements IDataProvider<string> {
+export class LocalFileDataProvider implements IDataProvider<string> {
   getData(filePath: string): TInputData {
     const stringData = this.readFromFile(filePath);
     return this.convertInputData(stringData);

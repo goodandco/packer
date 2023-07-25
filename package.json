@@ -1,6 +1,6 @@
 {
   "name": "@goodandco/mobiquity-packer",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Packer for Mobiquity by @goodandco",
   "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
   "license": "ISC",
@@ -23,10 +23,11 @@
   ],
   "scripts": {
     "build": "tsc -b",
-    "prebuild": "rimraf dist",
+    "prebuild": "npm run clean",
     "lint": "eslint \"{src,apps,libs,test,integration}/**/*.ts\" --fix",
     "test": "mocha test/**/*.spec.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "clean": "tsc -b --clean"
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",
