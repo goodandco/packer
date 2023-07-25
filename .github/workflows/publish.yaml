@@ -1,10 +1,7 @@
-name: Publish package to Private Registry
+name: Publish package to NPM Registry
 on:
-  push:
-    branches:
-      - main
-#  release:
-#    types: [ published ]
+  release:
+    types: [ published ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -27,19 +24,19 @@ jobs:
 
       - name: Run build
         run: npm run build
-#  publish:
-#    needs: test
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: read
-#      packages: write
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: '19.x'
-#          registry-url: 'https://registry.npmjs.org'
-#      - run: npm ci
-#      - run: npm publish --access=public
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
