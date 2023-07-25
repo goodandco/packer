@@ -1,7 +1,7 @@
 import { IPackDataConvertor } from '../interfaces';
 import { TPackerResult } from '../types';
 
-export class LocalFileDataConvertor implements IPackDataConvertor<string> {
+export class DefaultPackDataConvertor implements IPackDataConvertor<string> {
   convert(result: TPackerResult): string {
     return result.reduce((res, rowData, i) => {
       const prefix = i !== 0 ? `\n` : '';

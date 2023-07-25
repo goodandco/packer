@@ -1,16 +1,17 @@
 import {
   BasePacker,
-  LocalFileDataConvertor,
+  DefaultPackDataConvertor,
+  DefaultPackCalculator,
   LocalFileDataProvider,
-  LocalFilePackCalculator,
 } from './client';
+import { MapReduce } from './algorithm/map-reduce';
 
 export class Packer {
   static pack(filePath: string): string {
     return new BasePacker(
       new LocalFileDataProvider(),
-      new LocalFilePackCalculator(),
-      new LocalFileDataConvertor(),
+      new DefaultPackCalculator(new MapReduce()),
+      new DefaultPackDataConvertor(),
     ).pack(filePath);
   }
 }

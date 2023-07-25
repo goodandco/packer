@@ -5,9 +5,14 @@
     "expected": "4\n-\n2,7\n8,9"
   },
   {
-    "name": "Should be match with custom expectations: file 'input.file.custom'",
+    "name": "Should be match with expectations: file 'input.file.100.allow'",
     "filePath": "input.file.100.allow",
     "expected": "4\n1"
+  },
+  {
+    "name": "Should be match another custom expectation: file 'input.file.custom",
+    "filePath": "input.file.custom",
+    "expected": "4\n-\n2,7\n8,9\n1,3,4\n4,5,6\n2,3\n2,4"
   },
   {
     "name": "Should throw an APIException because of package weight > 100",

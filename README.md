@@ -1,19 +1,31 @@
 # Packer
 
-by @goodandco
-for @mobiquity
+By [@goodandco](https://github.com/goodandco)
+For Mobiquity
 
+### Installation
 
-### Usage
+```shell
+npm i @goodandco/mobiquity-packer
+```
 
+### Using
 
 ```typescript
-import { Packer } from '@goodandco/mobiquity-packer';
+import Packer, { APIException } from '@goodandco/mobiquity-packer';
 
 async function main(): Promise<void> {
-  const result: string = Packer.pack('/foo/bar/file');
+  try {
+    const res = Packer.pack(__dirname + '/input.file');
+    console.log(res);
+  } catch (err) { // in case of violating constraints
+    if (err instanceof APIException) {
+      console.log('The APIException has been thrown.');
+    } else {
+      console.log('Unknown error.');
+    }
+  }
 
-  console.log(result);
 }
 
 main();
@@ -22,6 +34,7 @@ main();
 #### Input file format
 
 `/foo/bar/file`
+
 ```text
 81 : (1,53.38,€45) (2,88.62,€98) (3,78.48,€3) (4,72.30,€76) (5,30.18,€9) (6,46.34,€48)
 8 : (1,15.3,€34)
@@ -44,12 +57,23 @@ or
 8,9
 ```
 
-#### Commands
+### Commands
 
-`npm run lint` - lint + fix
+For linting:
 
-`npm run build` - building
+```shell
+npm run lint
+```
 
-`npm run test` - testing
+For building:
 
+```shell
+npm run build
+```
+
+For running tests:
+
+```shell
+npm run test
+```
 

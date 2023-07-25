@@ -1,4 +1,4 @@
-import { TInputData, TPackerResult } from './types';
+import { TInputData, TInputDataRowItem, TPackerResult } from './types';
 
 export interface IPacker<S, T> {
   pack(filePath: S): T;
@@ -14,4 +14,8 @@ export interface IDataProvider<T> {
 
 export interface IPackDataConvertor<T> {
   convert(result: TPackerResult): T;
+}
+
+export interface IRowCalculateAlgorithm {
+  run(maxWeight: number, items: Array<TInputDataRowItem>): Array<number>;
 }
