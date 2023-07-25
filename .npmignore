@@ -1,6 +1,8 @@
 # source
 **/*.ts
+**/*.js.map
 *.ts
+*.js.map
 
 # definitions
 !**/*.d.ts
@@ -8,10 +10,12 @@
 
 # configuration
 package-lock.json
-tslint.json
 tsconfig.json
 .prettierrc
-
+.eslintrc.js
+.eslintignore
 *.tsbuildinfo
 
+# devops
 test
+.github
