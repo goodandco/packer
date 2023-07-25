@@ -1,6 +1,7 @@
 import { IDataProvider } from '../interfaces';
 import { TInputData, TInputDataRow, TInputDataRowItem } from '../types';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
+import APIException from '../errors/api-exception';
 
 export default class LocalFileDataProvider implements IDataProvider<string> {
   getData(filePath: string): TInputData {
@@ -9,6 +10,9 @@ export default class LocalFileDataProvider implements IDataProvider<string> {
   }
 
   private readFromFile(filePath: string): string {
+    if (!existsSync(filePath)) {
+      throw new APIException(`File: ${filePath} does not exist.`);
+    }
     return readFileSync(filePath, { encoding: 'utf8' });
   }
 

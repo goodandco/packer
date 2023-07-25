@@ -7,6 +7,12 @@ import {
 import APIException from '../errors/api-exception';
 import { IPackCalculator } from '../interfaces';
 
+type TSumVariant = { ids: number[]; sum: number };
+type TCombinationVariant = {
+  items: { id: number; weight: number; price: number }[];
+  sum: number;
+};
+
 export default class LocalFilePackCalculator implements IPackCalculator {
   calculate(data: TInputData): TPackerResult {
     return data.map((row: TInputDataRow) => this.calculateRow(row));
@@ -50,7 +56,7 @@ export default class LocalFilePackCalculator implements IPackCalculator {
     const [, minItemWeight] = sorted[0];
 
     const result = sorted
-      // prepare list of all possible combinations
+      // prepare list of all possible combinations: Array<TCombinationVariant>
       .reduce((acc, [id, weight, price]) => {
         if (acc.length === 0 || weight + minItemWeight > maxWeight) {
           acc.push({
@@ -60,7 +66,7 @@ export default class LocalFilePackCalculator implements IPackCalculator {
         } else {
           const accLen = acc.length;
           for (let j = 0; j < accLen; j++) {
-            const { items, sum } = acc[j];
+            const { items, sum } = acc[j] as TCombinationVariant;
             const diff = sum + weight - maxWeight;
             if (diff <= 0) {
               acc.push({
@@ -86,26 +92,23 @@ export default class LocalFilePackCalculator implements IPackCalculator {
         }
         return acc;
       }, [])
-      // prepare datastructure for filtering by price
-      .map(({ items }) => {
-        return items.reduce(
+      // prepare datastructure for filtering by price:
+      // from Array<TCombinationVariant> to Array<TSumVariant>
+      .map(({ items }) =>
+        items.reduce(
           (r, item) => {
             r.ids.push(item.id);
             r.sum += item.price;
             return r;
           },
           { ids: [], sum: 0 },
-        );
-      })
-      // filtering prepared array
+        ),
+      )
+      // filtering prepared list of Array<TSumVariant>
+      // and choosing best TSumVariant
       .reduce(
-        (
-          res,
-          item: {
-            ids: number[];
-            sum: number;
-          },
-        ) => (res === null || item.sum > res.sum ? item : res),
+        (res, item: TSumVariant) =>
+          res === null || item.sum > res.sum ? item : res,
         null,
       );
 
