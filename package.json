@@ -1,6 +1,6 @@
 {
   "name": "@goodandco/mobiquity-packer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Packer for Mobiquity by @goodandco",
   "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
   "license": "ISC",
@@ -17,6 +17,10 @@
     "mobiquity",
     "packer"
   ],
+  "files": [
+    "**/*",
+    "*.md"
+  ],
   "scripts": {
     "build": "tsc -b",
     "prebuild": "rimraf dist",
@@ -29,7 +33,6 @@
   "devDependencies": {
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
-
     "@types/sinon": "^10.0.15",
     "@typescript-eslint/eslint-plugin": "5.61.0",
     "@typescript-eslint/parser": "5.62.0",
