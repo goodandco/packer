@@ -1,8 +1,22 @@
 {
   "name": "@goodandco/mobiquity-packer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Packer for Mobiquity by @goodandco",
+  "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/goodandco/packer#readme",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goodandco/packer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/goodandco/packer/issues"
+  },
+  "keywords": [
+    "mobiquity",
+    "packer"
+  ],
   "scripts": {
     "build": "tsc -b",
     "prebuild": "rimraf dist",
@@ -12,20 +26,6 @@
     "test": "mocha test/**/*.spec.ts",
     "test:dev": "mocha -w --watch-files test/**/*.spec.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/goodandco/packer.git"
-  },
-  "keywords": [
-    "mobiquity",
-    "packer"
-  ],
-  "author": "Oleksandr Hudenko <oleksandr.hudenko@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/goodandco/packer/issues"
-  },
-  "homepage": "https://github.com/goodandco/packer#readme",
   "devDependencies": {
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
