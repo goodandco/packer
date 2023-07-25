@@ -11,6 +11,8 @@
 # configuration
 package-lock.json
 tsconfig.json
+tsconfig.build.json
+tsconfig.spec.json
 .prettierrc
 .eslintrc.js
 .eslintignore
