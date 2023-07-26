@@ -1,7 +1,19 @@
-import { TCombinationVariant, TInputDataRowItem, TSumVariant } from '../types';
+import {
+  TCombinationVariant,
+  TCombinationVariantItem,
+  TInputDataRowItem,
+  TSumVariant,
+} from '../types';
 import { IRowCalculateAlgorithm } from '../interfaces';
 import { MAX_ITEM_COST, MAX_ITEM_WEIGHT } from '../constants';
 import { APIException } from '../errors';
+
+type TCombinationMap = Record<string, TCombinationVariant>;
+const generateNewKey = (items: Array<TCombinationVariantItem>) =>
+  items
+    .map(({ id }) => id)
+    .sort()
+    .join('-');
 
 export class MapReduce implements IRowCalculateAlgorithm {
   run(maxWeight: number, items: Array<TInputDataRowItem>): Array<number> {
@@ -31,60 +43,72 @@ export class MapReduce implements IRowCalculateAlgorithm {
       return 0;
     });
     const [, minItemWeight] = sorted[0];
-    const result = sorted
-      // prepare list of all possible combinations: Array<TCombinationVariant>
-      .reduce((acc, [id, weight, price]) => {
+    const combMap: TCombinationMap = sorted
+      // preparing of all possible combinations: TCombinationMap
+      .reduce((map, [id, weight, price]) => {
+        const keys = Object.keys(map);
         if (
-          // if there is very begining of calculation then we add item to the first subset
+          // if there is very beginning of calculation then we add item to the first subset
           // because in previous step we filtered the data and there is no weight more then maxWeight
-          acc.length === 0 ||
-          // also if there is no way to add even item with minimal weight to curernt items' weight
+          keys.length === 0 ||
+          // also if there is no way to add even item with minimal weight to current items' weight
           // and be in range of maxWeight, then we also create subset from only one current item
           weight + minItemWeight > maxWeight
         ) {
-          acc.push({
+          map[id] = {
             items: [{ id, weight, price }],
             sum: weight,
-          });
+          };
         } else {
-          const accLen = acc.length;
-          // replacement method
-          for (let j = 0; j < accLen; j++) {
-            const { items, sum } = acc[j] as TCombinationVariant;
+          // calculating new subset variant
+          // the key is id-based string joined with "-", like "1-2-3"
+          for (const key of keys) {
+            const { items, sum } = map[key] as TCombinationVariant;
             // diff shows the an amount of weight which could be added after we add
-            // current weight to subarray's weight sum
+            // current weight to sub-array's weight sum
             const diff = sum + weight - maxWeight;
             // if it less then zero it means we are able to add new subset
-            // which included acc[j] subset + new one
+            // which included to key's subset + new one
             if (diff <= 0) {
-              acc.push({
-                items: [...items, { id, weight, price }],
+              const newItems = [...items, { id, weight, price }];
+              const newKey = generateNewKey(newItems);
+              map[newKey] = {
+                items: newItems,
                 sum: sum + weight,
-              });
+              };
             } else {
               // here we're going to check if we have some elements which we
               // could replace with our current item and be in maxWeight range
               const foundToReplaceList = items.filter(
-                (item) => diff - item.weight <= 0,
+                (item) => item.id !== id && diff - item.weight <= 0,
               );
 
               for (const foundToReplace of foundToReplaceList) {
-                acc.push({
-                  items: [
-                    ...items.filter((item) => item.id !== foundToReplace.id),
-                    { id, weight, price },
-                  ],
-                  sum: sum - foundToReplace.weight + weight,
-                });
+                const newItems = [
+                  ...items.filter((item) => item.id !== foundToReplace.id),
+                  { id, weight, price },
+                ];
+                const newKey = generateNewKey(newItems);
+
+                if (map[newKey] === undefined) {
+                  map[newKey] = {
+                    items: newItems,
+                    sum: sum - foundToReplace.weight + weight,
+                  };
+                }
               }
             }
           }
         }
-        return acc;
-      }, [])
-      // prepare datastructure for filtering by price:
-      // from Array<TCombinationVariant> to Array<TSumVariant>
-      .map(({ items, sum }) => {
+        return map;
+      }, {});
+
+    // prepare datastructure for filtering by price:
+    // eject items from each key of the TCombinationMap
+    // and convert into flat Array<TSumVariant>
+    const result = Object.keys(combMap)
+      .map((key) => {
+        const { items, sum } = combMap[key];
         return items.reduce(
           (r, item) => {
             r.ids.push(item.id);
@@ -105,7 +129,6 @@ export class MapReduce implements IRowCalculateAlgorithm {
             : res,
         null,
       ) as TSumVariant | null;
-
     return result ? result.ids.sort() : [];
   }
 }

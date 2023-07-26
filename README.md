@@ -6,13 +6,13 @@ For Mobiquity
 ### Installation
 
 ```shell
-npm i @goodandco/mobiquity-packer
+npm install @goodandco/packer
 ```
 
 ### Using
 
 ```typescript
-import Packer, { APIException } from '@goodandco/mobiquity-packer';
+import Packer, { APIException } from '@goodandco/packer';
 
 async function main(): Promise<void> {
   try {
