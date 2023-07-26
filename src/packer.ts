@@ -8,7 +8,7 @@ import { HashMapAlgorithm } from './algorithm/hash-map-algorithm';
 
 export class Packer {
   static pack(filePath: string): string {
-    return new BasePacker(
+    return new BasePacker<string, string>(
       new LocalFileDataProvider(),
       new DefaultPackCalculator(new HashMapAlgorithm()),
       new DefaultPackDataConvertor(),

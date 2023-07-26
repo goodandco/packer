@@ -36,24 +36,14 @@ export class HashMapAlgorithm implements IRowCalculateAlgorithm {
 
     if (!filteredItems.length) return [];
 
-    // necessary to asc sorting to be sure that next element has bigger weight
-    const sorted = filteredItems.sort(([, aWeight], [, bWeight]) => {
-      if (aWeight < bWeight) return -1;
-      if (aWeight > bWeight) return 1;
-      return 0;
-    });
-    const [, minItemWeight] = sorted[0];
-    const combMap: TCombinationMap = sorted
+    const combMap: TCombinationMap = filteredItems
       // preparing of all possible combinations: TCombinationMap
       .reduce((map, [id, weight, price]) => {
         const keys = Object.keys(map);
         if (
           // if there is very beginning of calculation then we add item to the first subset
           // because in previous step we filtered the data and there is no weight more then maxWeight
-          keys.length === 0 ||
-          // also if there is no way to add even item with minimal weight to current items' weight
-          // and be in range of maxWeight, then we also create subset from only one current item
-          weight + minItemWeight > maxWeight
+          keys.length === 0
         ) {
           map[id] = {
             items: [{ id, weight, price }],
@@ -129,6 +119,7 @@ export class HashMapAlgorithm implements IRowCalculateAlgorithm {
             : res,
         null,
       ) as TSumVariant | null;
+
     return result ? result.ids.sort() : [];
   }
 }

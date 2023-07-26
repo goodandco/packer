@@ -40,10 +40,10 @@ export class LocalFileDataProvider implements IDataProvider<string> {
   private mapItem(itemsStr: string): [number, number, number] {
     const [id, weight, price] = itemsStr.split(',');
 
-    return [parseInt(id), parseInt(weight), this.convertPrice(price)];
+    return [parseInt(id), parseFloat(weight), this.convertPrice(price)];
   }
 
   private convertPrice(priceStr: string): number {
-    return parseInt(priceStr.replace('€', ''));
+    return parseFloat(priceStr.replace('€', ''));
   }
 }
