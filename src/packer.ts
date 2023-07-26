@@ -4,13 +4,13 @@ import {
   DefaultPackCalculator,
   LocalFileDataProvider,
 } from './client';
-import { MapReduce } from './algorithm/map-reduce';
+import { HashMapAlgorithm } from './algorithm/hash-map-algorithm';
 
 export class Packer {
   static pack(filePath: string): string {
     return new BasePacker(
       new LocalFileDataProvider(),
-      new DefaultPackCalculator(new MapReduce()),
+      new DefaultPackCalculator(new HashMapAlgorithm()),
       new DefaultPackDataConvertor(),
     ).pack(filePath);
   }

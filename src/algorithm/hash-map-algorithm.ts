@@ -1,4 +1,5 @@
 import {
+  TCombinationMap,
   TCombinationVariant,
   TCombinationVariantItem,
   TInputDataRowItem,
@@ -8,14 +9,13 @@ import { IRowCalculateAlgorithm } from '../interfaces';
 import { MAX_ITEM_COST, MAX_ITEM_WEIGHT } from '../constants';
 import { APIException } from '../errors';
 
-type TCombinationMap = Record<string, TCombinationVariant>;
 const generateNewKey = (items: Array<TCombinationVariantItem>) =>
   items
     .map(({ id }) => id)
     .sort()
     .join('-');
 
-export class MapReduce implements IRowCalculateAlgorithm {
+export class HashMapAlgorithm implements IRowCalculateAlgorithm {
   run(maxWeight: number, items: Array<TInputDataRowItem>): Array<number> {
     // filtering all the items with weight less than max weight for package
     // and validating MAX_ITEM_WEIGHT & MAX_ITEM_COST
